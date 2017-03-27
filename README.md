@@ -18,7 +18,7 @@ vagrant plugin install vagrant-vbguest
 vagrant plugin install vai
 ```
 
-# Clone this repository
+## Clone this repository
 
 ```
 git clone https://github.com/consort-it/ansible-example.git
@@ -54,3 +54,48 @@ vagrant up demo
 [http://10.100.100.200:9000](http://10.100.100.200:9000)
 
 If you see 'UI For Docker, then your provisioning was successful.
+
+## Provisioning
+
+In a Vagrant environment like this you would use a simple
+
+```
+vagrant provision demo
+```
+
+to start a provisioning run on your box. In a real world example, you would use
+
+```
+ansible-playbook demo-playbook.yml -i hosts --extra-vars "user=deploy"
+```
+
+where the deploy user has sudo access to your system which could be defined in *hosts* file like this:
+
+```
+[demo-hosts]
+1.2.3.4
+```
+
+This requires your playbook to include something like this, too:
+
+```
+remote_user: '{{ user }}'
+```
+
+**Please note:** Vagrant style host syntax and real world style hosts syntax is supported.
+
+## Testing
+
+On your host:
+
+```
+bundle install
+```
+
+Also do this inside your Vagrant box:
+
+```
+vagrant ssh demo
+cd /vagrant
+bundle install
+```
