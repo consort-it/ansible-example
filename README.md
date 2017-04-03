@@ -1,7 +1,19 @@
 # ansible-example
 
 This is an example to show you how to use Ansible and Serverspec with [ansible_spec_plus](https://github.com/consort-it/ansible_spec_plus) to test roles,
-hosts and playbooks and how to keep track ofyour code with simple resource coverge (test coverage).
+hosts and playbooks and how to keep track of your code with simple resource coverge (test coverage).
+
+Basic installation instructions on how to connect Ansible and Serverspec can be found [here](https://github.com/volanja/ansible_spec).
+
+To make it short:
+
+1. ```gem install ansible_spec_plus```
+
+2. ```ansiblespec-init```
+
+3. Check *.ansiblespec* file
+
+4. Check *hosts* file
 
 ## Dependencies and needed tools
 
@@ -24,7 +36,7 @@ vagrant plugin install vai
 git clone https://github.com/consort-it/ansible-example.git
 ```
 
-## Start your SUT (subject under test)
+## Start your SUT (system under test)
 
 Asssumed everything is installed correctly, you can proceed with:
 
@@ -53,7 +65,7 @@ vagrant up demo
 
 [http://10.100.100.200:9000](http://10.100.100.200:9000)
 
-If you see 'UI For Docker, then your provisioning was successful.
+If you see 'UI For Docker', then your provisioning was successful.
 
 ## Provisioning
 
@@ -69,14 +81,14 @@ to start a provisioning run on your box. In a real world example, you would use
 ansible-playbook demo-playbook.yml -i hosts --extra-vars "user=deploy"
 ```
 
-where the deploy user has sudo access to your system which could be defined in *hosts* file like this:
+where the deploy user has sudo access to your system. Hosts file should look like this:
 
 ```
 [demo-hosts]
 1.2.3.4
 ```
 
-This requires your playbook to include something like this, too:
+This requires your playbook to include:
 
 ```
 remote_user: '{{ user }}'
