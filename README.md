@@ -210,3 +210,54 @@ vagrant ssh demo
 cd /vagrant
 bundle install
 ```
+
+ansible_spec_plus implements a switch to allow local test execution.
+
+```
+~ master ● asp -h
+Ansible Spec Plus is an addon to 'ansible_spec' which enables you to run
+specs for Ansible roles, hosts and/or playbooks separately. Furthermore
+it provides you with a simple resource coverage summary.
+
+Usage: asp COMMAND [OPTIONS]
+
+Commands:
+     list                                     # list all available specs
+     [rolespec|hostspec|playbookspec] list    # list all available role/host/playbook specs
+
+Options:
+    -l, --local                      running specs on local machine
+    -h, --help                       help
+```
+
+**Please note:** You may need sudo rights to run some specs. So don't forget to add 'sudo' before your asp command where you need it.
+
+Run specs for role common:
+
+```
+~ master ● sudo asp rolespec common -l
+```
+
+Run specs for role demo:
+
+```
+~ master ● asp rolespec demo -l
+```
+
+Run specs for role docker:
+
+```
+~ master ● asp rolespec docker -l
+```
+
+Run specs for host demo:
+
+```
+~ master ● asp hostspec demo -l
+```
+
+Run specs for playbook demo:
+
+```
+~ master ● sudo asp playbookspec demo -l
+```
