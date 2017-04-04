@@ -11,9 +11,11 @@ To make it short:
 
 2. ```ansiblespec-init```
 
-3. Check *.ansiblespec* file
+3. Check *site.yml* file
 
 4. Check *hosts* file
+
+5. Check *.ansiblespec* file (and make sure that your master playbook and hosts files are correct)
 
 ## Dependencies and needed tools
 
@@ -69,13 +71,19 @@ If you see 'UI For Docker', then your provisioning was successful.
 
 ## Provisioning
 
+#### Vagrant style
+
 In a Vagrant environment like this you would use a simple
 
 ```
 vagrant provision demo
 ```
 
-to start a provisioning run on your box. In a real world example, you would use
+to start a provisioning run on your box.
+
+#### Real world style
+
+In a real world example, you would use
 
 ```
 ansible-playbook demo-playbook.yml -i hosts --extra-vars "user=deploy"
@@ -88,7 +96,7 @@ where the deploy user has sudo access to your system. Hosts file should look lik
 1.2.3.4
 ```
 
-This requires your playbook to include:
+This also requires your playbook to include:
 
 ```
 remote_user: '{{ user }}'
@@ -98,13 +106,13 @@ remote_user: '{{ user }}'
 
 ## Testing
 
-On your host:
+#### On your host
 
 ```
 bundle install
 ```
 
-Also do this inside your Vagrant box:
+#### Inside your Vagrant box
 
 ```
 vagrant ssh demo
