@@ -9,7 +9,7 @@ To make it short:
 
 1. ```gem install ansible_spec_plus```
 
-2. ```ansiblespec-init```
+2. ```asp-init```
 
 3. Check *site.yml* file
 
