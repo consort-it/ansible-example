@@ -86,7 +86,7 @@ to start a provisioning run on your box.
 In a real world example, you would use
 
 ```
-ansible-playbook demo-playbook.yml -i hosts --extra-vars "user=deploy"
+ansible-playbook demo.yml -i hosts --extra-vars "user=deploy"
 ```
 
 where the deploy user has sudo access to your system. Hosts file should look like this:
@@ -102,17 +102,108 @@ This also requires your playbook to include:
 remote_user: '{{ user }}'
 ```
 
-**Please note:** Vagrant style host syntax and real world style hosts syntax is supported.
+**Please note:** Both, Vagrant style and real world style hosts file syntax is supported.
 
 ## Testing
 
-#### On your host
+### Remote with SSH
 
 ```
 bundle install
 ```
 
-#### Inside your Vagrant box
+List available specs:
+
+```
+~ master ● asp list
+asp rolespec common              # run role specs for common
+asp rolespec demo                # run role specs for demo
+asp rolespec docker              # run role specs for docker
+asp hostspec demo                # run host specs for demo
+asp playbookspec demo            # run playbook specs (host specs and role specs) for demo playbook
+```
+
+Run specs for role common:
+
+```
+~ master ● asp rolespec common
+
+...
+
+Total resources: 4
+Touched resources: 4
+Resource coverage: 100%
+```
+
+Run specs for role demo:
+
+```
+~ master ● asp rolespec demo
+
+...
+
+Total resources: 1
+Touched resources: 1
+Resource coverage: 100%
+```
+
+Run specs for role docker:
+
+```
+~ master ● asp rolespec docker
+
+...
+
+Total resources: 9
+Touched resources: 1
+Resource coverage: 11%
+
+Uncovered resources:
+- Package "python-pip"
+- Package "docker-py"
+- File "/etc/default/docker"
+- Service "docker"
+- File "/root/.docker"
+- File "/root/.docker/config.json"
+- File "/home/vagrant/.docker"
+- File "/home/vagrant/.docker/config.json"
+```
+
+Run specs for host demo:
+
+```
+~ master ● asp hostspec demo
+
+...
+
+Total resources: 5
+Touched resources: 5
+Resource coverage: 100%
+```
+
+Run specs for playbook demo:
+
+```
+~ master ● asp playbookspec demo
+
+...
+
+Total resources: 19
+Touched resources: 11
+Resource coverage: 58%
+
+Uncovered resources:
+- Package "python-pip"
+- Package "docker-py"
+- File "/etc/default/docker"
+- Service "docker"
+- File "/root/.docker"
+- File "/root/.docker/config.json"
+- File "/home/vagrant/.docker"
+- File "/home/vagrant/.docker/config.json"
+```
+
+### Locally within your Vagrant box
 
 ```
 vagrant ssh demo
