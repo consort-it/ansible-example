@@ -1,0 +1,32 @@
+- name: fix 'stdin is not a tty' warning
+  template: src=profile dest=/root/.profile owner=root group=root mode=0644
+
+- name: JQ is present
+  apt:
+    name: jq
+    force: yes
+
+- name: language-pack-de is present
+  apt:
+    name: language-pack-de
+    force: yes
+
+- name: Hosts are present
+  lineinfile:
+    dest: /etc/hosts
+    # regexp: "^{{ item.host_ip }}"
+    line: "{{ item.host_ip }} {{ item.host_name }}"
+  with_items: "{{ hosts }}"
+
+- name: Services are not running
+  service:
+    name: "{{ item }}"
+    state: stopped
+  ignore_errors: yes
+  with_items: "{{ obsolete_services }}"
+
+- name: Install add-apt-repository
+  apt:
+    name: software-properties-common
+    state: latest
+    force: yes

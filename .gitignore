@@ -1,0 +1,9 @@
+/.idea
+/*.iml
+.vagrant
+/registry
+/registry-mirror
+.ansible-installed
+hosts
+report.*
+*.retry

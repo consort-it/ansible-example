@@ -1,0 +1,41 @@
+- hosts: localhost
+  name: demo
+  remote_user: vagrant
+  serial: 1
+  roles:
+    - common
+    - docker
+    - demo
+  tasks:
+    - name: install git
+      apt:
+        name: git
+        state: latest
+        force: yes
+
+    - name: install ruby2.0
+      apt:
+        name: ruby2.0
+        state: latest
+        force: yes
+
+    - name: install ruby2.0-dev
+      apt:
+        name: ruby2.0-dev
+        state: latest
+        force: yes
+
+    - name: install zlib1g-dev
+      apt:
+        name: zlib1g-dev
+        state: latest
+        force: yes
+
+    - name: make ruby2.0 system default ruby
+      command: update-alternatives --install /usr/bin/ruby ruby /usr/bin/ruby2.0 50 --slave /usr/bin/irb irb /usr/bin/irb2.0 --slave /usr/bin/rake rake /usr/bin/rake2.0 --slave /usr/bin/gem gem /usr/bin/gem2.0 --slave /usr/bin/rdoc rdoc /usr/bin/rdoc2.0 --slave /usr/bin/testrb testrb /usr/bin/testrb2.0 --slave /usr/bin/erb erb /usr/bin/erb2.0 --slave /usr/bin/ri ri /usr/bin/ri2.0
+
+    - name: install bundler with gem
+      gem:
+        name: bundler
+        user_install: no
+        state: present

@@ -1,0 +1,7 @@
+hosts: [
+  { host_ip: "10.100.100.200", host_name: "demo"},
+]
+
+obsolete_services:
+  - puppet
+  - chef-client
